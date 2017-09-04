@@ -9,18 +9,18 @@ All the 3 microservices just display a Hello World message.
 
 ### Java Microservice:
 * Run docker pull harsha16/helloworld_microservices:hello_java
-* Run docker run -d -w /java-service -p 8080:8080 harsha16/helloworld_microservices:hello_java java Application
-* Java Microservice -> http://localhost:8080
+* Run docker run -d -w /java-service -p 8085:8080 harsha16/helloworld_microservices:hello_java java Application
 
 ### Python Microservice
 * Run docker pull harsha16/helloworld_microservices:hello_python
 * Run docker run -p 5000:5000 -d harsha16/helloworld_microservices:hello_python python app.py
-* Python Microservice -> http://localhost:5000
 
 ### Node.js Microservice
 * Run docker pull harsha16/helloworld_microservices:hello_node
 * Run docker run -p 8000:8000 -d harsha16/helloworld_microservices:hello_node npm start
-* Python Microservice -> http://localhost:8000
+
+### UI
+* Run index.html file, to run all 3 microservices
 
 ### References:
 * https://spring.io/guides/gs/spring-boot-docker/#scratch
