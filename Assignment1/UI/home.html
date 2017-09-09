@@ -1,0 +1,36 @@
+<html>
+   <head>
+	  <link rel="shortcut icon" href="">
+      <title>Hello World Microservices</title>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
+      <script>
+         $(document).ready(function(){
+           $("#java").click(function(){
+			console.log("1");
+             $.post("http://localhost:8080/java", function(data){
+			 console.log("2");
+			 console.log(data);
+         document.getElementById('hello_msg').innerHTML = data;
+             });
+           });
+            $("#python").click(function(){
+             $.post("http://localhost:8080/python", function(data){
+         document.getElementById('hello_msg').innerHTML = data;
+             });
+           });
+             $("#node").click(function(){
+             $.post("http://localhost:8080/node", function(data){
+         document.getElementById('hello_msg').innerHTML = data;
+             });
+           });
+         });
+      </script>
+   </head>
+   <body>
+      <button id="java">Java Microservice</button>
+      <button id="python">Python Microservice</button>
+      <button id="node">Node Microservice</button>
+      <hr width="2">
+      <div id="hello_msg"></div>
+   </body>
+</html>
