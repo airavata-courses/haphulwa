@@ -6,7 +6,7 @@ from flask_cors import CORS,cross_origin
 
 class FibonacciRpcClient(object):
     def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
 
         self.channel = self.connection.channel()
 
@@ -36,7 +36,7 @@ class FibonacciRpcClient(object):
 
 class FactorialRpcClient(object):
     def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
 
         self.channel = self.connection.channel()
 

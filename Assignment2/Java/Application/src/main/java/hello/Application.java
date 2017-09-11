@@ -18,14 +18,15 @@ public class Application {
  @RequestMapping("/")
  public String home() throws IOException, TimeoutException {
   ConnectionFactory factory = new ConnectionFactory();
-  factory.setHost("localhost");
+  factory.setHost("my-rabbit");
 
   Connection connection = null;
 
   try {
    connection = factory.newConnection();
    final Channel channel = connection.createChannel();
-
+	System.out.println(connection);
+	System.out.println(channel);
    channel.queueDeclare(RPC_QUEUE_NAME, false, false, false, null);
 
    channel.basicQos(1);
@@ -47,7 +48,8 @@ public class Application {
       int n = Integer.parseInt(message);
 
       System.out.println(" [.] factorial(" + message + ")");
-      response += factorial(n);
+      response = String.valueOf(factorial(n));
+	  System.out.println(" factorial" + response);
      } catch (RuntimeException e) {
       System.out.println(" [.] " + e.toString());
      } finally {
