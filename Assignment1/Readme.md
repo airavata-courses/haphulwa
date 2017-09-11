@@ -19,8 +19,9 @@ All the 3 microservices just display a Hello World message.
 * Run docker pull harsha16/helloworld_microservices:hello_node
 * Run docker run -p 8000:8000 -d harsha16/helloworld_microservices:hello_node npm start
 
-### UI
-* Run index.html file, to run all 3 microservices
+### API gateway
+* Run python server.py 
+* Go to http://localhost:7000/ to see the output
 
 ### References:
 * https://spring.io/guides/gs/spring-boot-docker/#scratch
