@@ -28,8 +28,13 @@ amqp.connect('amqp://my-rabbit', function(err, conn) {
 });
 
 function fibonacci(n) {
- if (n == 0 || n == 1)
-  return n;
- else
-  return fibonacci(n - 1) + fibonacci(n - 2);
+    var a = 0, b = 1, c;
+    if (n < 3) {
+        if (n < 0) return fib(-n);
+        if (n === 0) return 0;
+        return 1;
+    }
+    while (--n)
+        c = a + b, a = b, b = c;
+    return c;
 }

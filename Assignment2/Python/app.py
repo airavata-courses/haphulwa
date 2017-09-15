@@ -1,86 +1,41 @@
+#!/usr/bin/env python
 import pika
-import uuid
-from flask import Flask
-from flask import request
-from flask_cors import CORS,cross_origin
 
-class FibonacciRpcClient(object):
-    def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
 
-        self.channel = self.connection.channel()
+channel = connection.channel()
 
-        result = self.channel.queue_declare(exclusive=True)
-        self.callback_queue = result.method.queue
+channel.queue_declare(queue='rpc_prime_queue')
 
-        self.channel.basic_consume(self.on_response, no_ack=True,
-                                   queue=self.callback_queue)
+def is_prime(n):
+  if n == 2 or n == 3: return 0
+  if n < 2 or n%2 == 0: return 1
+  if n < 9: return 0
+  if n%3 == 0: return 1
+  r = int(n**0.5)
+  f = 5
+  while f <= r:
+    print('\t',f)
+    if n%f == 0: return 1
+    if n%(f+2) == 0: return 1
+    f +=6
+  return 0
 
-    def on_response(self, ch, method, props, body):
-        if self.corr_id == props.correlation_id:
-            self.response = body
+def on_request(ch, method, props, body):
+    n = int(body)
 
-    def call(self, n):
-        self.response = None
-        self.corr_id = str(uuid.uuid4())
-        self.channel.basic_publish(exchange='',
-                                   routing_key='rpc_queue',
-                                   properties=pika.BasicProperties(
-                                         reply_to = self.callback_queue,
-                                         correlation_id = self.corr_id,
-                                         ),
-                                   body=str(n))
-        while self.response is None:
-            self.connection.process_data_events()
-        return int(self.response)
+    print(" [.] prime(%s)" % n)
+    response = is_prime(n)
 
-class FactorialRpcClient(object):
-    def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
+    ch.basic_publish(exchange='',
+                     routing_key=props.reply_to,
+                     properties=pika.BasicProperties(correlation_id = \
+                                                         props.correlation_id),
+                     body=str(response))
+    ch.basic_ack(delivery_tag = method.delivery_tag)
 
-        self.channel = self.connection.channel()
+channel.basic_qos(prefetch_count=1)
+channel.basic_consume(on_request, queue='rpc_prime_queue')
 
-        result = self.channel.queue_declare(exclusive=True)
-        self.callback_queue = result.method.queue
-
-        self.channel.basic_consume(self.on_response, no_ack=True,
-                                   queue=self.callback_queue)
-
-    def on_response(self, ch, method, props, body):
-        if self.corr_id == props.correlation_id:
-            self.response = body
-
-    def call(self, n):
-        self.response = None
-        self.corr_id = str(uuid.uuid4())
-        self.channel.basic_publish(exchange='',
-                                   routing_key='rpc_fact_queue',
-                                   properties=pika.BasicProperties(
-                                         reply_to = self.callback_queue,
-                                         correlation_id = self.corr_id,
-                                         ),
-                                   body=str(n))
-        while self.response is None:
-            self.connection.process_data_events()
-        return int(self.response)
-		
-fibonacci_rpc = FibonacciRpcClient()
-factorial_rpc = FactorialRpcClient()
-
-app = Flask(__name__)
-CORS(app)
-
-@app.route("/fibonacci", methods=['GET', 'POST'])
-def say_hello():
-	message = str(request.args.get('number'))
-	response = fibonacci_rpc.call(int(message))
-	return str(response);
-	
-@app.route("/factorial", methods=['GET', 'POST'])
-def say_hello2():
-	message = str(request.args.get('number2'))
-	response = factorial_rpc.call(int(message))
-	return str(response);
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+print(" [x] Awaiting RPC requests")
+channel.start_consuming()
