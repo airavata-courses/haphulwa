@@ -1,6 +1,7 @@
 # Assignment 2
 
 [Architecture Diagram](https://github.com/airavata-courses/haphulwa/blob/master/Assignment2/Assignment2_Diagram.jpg)
+
 ### Starting RabbitMQ on docker:
 * Run docker run -d --hostname my-rabbit --name some-rabbit3 -p 8080:15672 -p 5672:5672 -p 5671:5671 rabbitmq:3-management
 
