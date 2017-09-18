@@ -130,7 +130,7 @@ def runit():
       <script>
          $(document).ready(function() {
          $("#calculate").click(function(){
-         $.ajax({url: "http://localhost:5000/fibonacci", 
+         $.ajax({url: "http://129.114.17.184:5000/fibonacci", 
          data:{number: $("#number").val()}, 
          type:"GET", 
          success: function(result){
@@ -138,7 +138,7 @@ def runit():
          }});
          });
          $("#calculate2").click(function(){
-         $.ajax({url: "http://localhost:5000/factorial", 
+         $.ajax({url: "http://129.114.17.184:5000/factorial", 
          data:{number2: $("#number2").val()}, 
          type:"GET", 
          success: function(result){
@@ -146,7 +146,7 @@ def runit():
          }});
          });
 		  $("#calculate3").click(function(){
-         $.ajax({url: "http://localhost:5000/prime", 
+         $.ajax({url: "http://129.114.17.184:5000/prime", 
          data:{number3: $("#number3").val()}, 
          type:"GET", 
          success: function(result){
