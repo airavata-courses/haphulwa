@@ -10,7 +10,7 @@ CORS(app)
 
 class FibonacciRpcClient(object):
     def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
 
         self.channel = self.connection.channel()
 
