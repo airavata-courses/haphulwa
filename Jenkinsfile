@@ -14,7 +14,7 @@ node {
         app = docker.build("harsha/microservice1")
     }
     stage('Deploy'){
-        def c = docker.image('harsha/microservice1').run('--link some-rabbit3:rabbit -w /java-service -p 8085:8080')
+        def c = docker.image('harsha/microservice1').run('-w /java-service -p 8085:8080')
     }
 
 
