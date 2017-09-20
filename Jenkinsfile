@@ -14,7 +14,7 @@ node {
         app = docker.build("harsha/gateway")
     }
     stage('Deploy'){
-        def c = docker.image('harsha/gateway').run('--link some-rabbit3:rabbit -p 5000:5000')
+        def c = docker.image('harsha/gateway').run('-p 5000:5000')
     }
 
 
