@@ -10,7 +10,7 @@ CORS(app)
 
 class FibonacciRpcClient(object):
     def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='129.114.17.184'))
 
         self.channel = self.connection.channel()
 
@@ -38,7 +38,7 @@ class FibonacciRpcClient(object):
 
 class FactorialRpcClient(object):
     def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='129.114.17.184'))
 
         self.channel = self.connection.channel()
 
@@ -68,7 +68,7 @@ class FactorialRpcClient(object):
 		
 class PrimeRpcClient(object):
     def __init__(self):
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='my-rabbit'))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(host='129.114.17.184'))
 
         self.channel = self.connection.channel()
 
