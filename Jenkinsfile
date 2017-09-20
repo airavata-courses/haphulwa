@@ -14,7 +14,7 @@ node {
         app = docker.build("harsha/microservice2")
     }
     stage('Deploy'){
-        def c = docker.image('harsha/microservice2').run('--link some-rabbit3:rabbit -p 8000:8000')
+        def c = docker.image('harsha/microservice2').run('-p 8000:8000')
     }
 
 
