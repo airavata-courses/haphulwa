@@ -1,6 +1,6 @@
 var amqp = require('amqplib/callback_api');
 
-amqp.connect('amqp://my-rabbit', function(err, conn) {
+amqp.connect('amqp://129.114.17.184:15672', function(err, conn) {
  conn.createChannel(function(err, ch) {
   var q = 'rpc_queue';
 
