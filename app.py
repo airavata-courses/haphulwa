@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import pika
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='129.114.17.184:15672'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='129.114.17.184'))
 
 channel = connection.channel()
 
