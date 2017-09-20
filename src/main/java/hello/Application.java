@@ -18,7 +18,7 @@ public class Application {
  @RequestMapping("/")
  public String home() throws IOException, TimeoutException {
   ConnectionFactory factory = new ConnectionFactory();
-  factory.setHost("my-rabbit");
+  factory.setHost("129.114.17.184:15672");
 
   Connection connection = null;
 
