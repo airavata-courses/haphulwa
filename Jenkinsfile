@@ -14,7 +14,10 @@ node {
         app = docker.build("harsha/gateway")
     }
     stage('Deploy'){
-        def c = docker.image('harsha/gateway').run('-p 5000:5000')
+        steps {
+			sh 'sudo docker ps -q --filter "name=gateway" | grep -q . && sudo docker stop msp && sudo docker rm -fv gateway'
+		}
+        def c = docker.image('harsha/gateway').run('-p 5000:5000 --name gateway')
     }
 
 
