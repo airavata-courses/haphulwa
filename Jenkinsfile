@@ -10,7 +10,8 @@ node {
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-      sh 'docker ps -q --filter "name=gateway" | grep -q . && docker stop msp && docker rm -fv gateway'
+   sh '''docker stop gateway'''
+    sh '''docker rm gateway'''
         app = docker.build("harsha/gateway")
     }
     stage('Deploy'){
